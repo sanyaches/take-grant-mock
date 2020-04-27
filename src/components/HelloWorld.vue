@@ -15,10 +15,10 @@
       <p> Available rights: {{ selectedEdge.label || 'Not selected.'}} </p>
     </div>
     <div class="buttons">
-      <button class="button" :disabled="!getRights.take">Take</button>
-      <button class="button" :disabled="!getRights.grant">Grant</button>
-      <button class="button" :disabled="!getRights.create">Create</button>
-      <button class="button" :disabled="!getRights.remove">Remove</button>
+      <button @click="startAction('take')" class="button" :disabled="!getRights.take">Take</button>
+      <button @click="startAction('grant')" class="button" :disabled="!getRights.grant">Grant</button>
+      <button @click="startAction('create')" class="button" :disabled="!getRights.create">Create</button>
+      <button @click="startAction('remove')" class="button" :disabled="!getRights.remove">Remove</button>
     </div>
   </div>
 </template>
@@ -155,6 +155,10 @@ export default {
       if (typeof this.selectedEdge.label !== 'undefined') this.selectedEdge = {};
 
       this.selectedEdge = this.edges[(this.selectedNode.first.index - 1) * 5 + (this.selectedNode.second.index - 6)];
+    },
+    startAction (action) {
+      console.log(`${this.selectedNode.first.label} want to "${action}" with ${this.selectedNode.second.label}`);
+      this.deselectNodes();
     },
     deselectNodes () {
       this.selectedNode.first = {};
